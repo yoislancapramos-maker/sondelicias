@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Son D'licias – Cocina Cubana Auténtica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#hero">Son <span>D'licias</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#especiales">Servicios</a></li>
+      <li><a href="#como">Cómo pedir</a></li>
+      <li><a href="#historia">Nosotros</a></li>
+      <li><a href="#contacto" class="nav-cta">Pedir ahora</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🇨🇺 Las Delicias de Yohandra</div>
+      <h1 class="hero-title">
+        <span class="r">Son</span><br>
+        <span class="g">D'licia</span><span class="y">s</span>
+      </h1>
+      <p class="hero-tagline">Cocina cubana auténtica hecha con amor. Delivery a tu puerta o retira en el local.</p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn btn-red">🍽️ Ver el menú</a>
+        <a href="https://wa.me/598092085838" class="btn btn-outline" target="_blank">💬 Escribinos</a>
+      </div>
+      <div class="hero-pills">
+        <span class="pill">🛵 Delivery</span>
+        <span class="pill">🏠 Retiro en local</span>
+        <span class="pill">🎉 Buffets</span>
+        <span class="pill">✨ A pedido</span>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <div class="hero-img-frame">
+        <img src="img/chef.jpg" alt="Yohandra y su equipo">
+        <div class="hero-img-badge">👩‍🍳 Yohandra & equipo</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="flag"></div>
+
+  <!-- STATS -->
+  <div id="stats">
+    <div class="reveal">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Recetas cubanas</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num">+20</div>
+      <div class="stat-label">Platos disponibles</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num">🛵</div>
+      <div class="stat-label">Delivery rápido</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num">★★★★★</div>
+      <div class="stat-label">Clientes felices</div>
+    </div>
+  </div>
+
+  <!-- BENEFICIOS -->
+  <section id="beneficios">
+    <div class="text-center reveal">
+      <div class="sec-label">¿Por qué elegirnos?</div>
+      <h2 class="sec-title">Más que un <span>antojo</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="ben-grid">
+      <div class="ben-card reveal"><span class="ben-icon">🍽️</span>
+        <div class="ben-title">Recetas Auténticas</div>
+        <p class="ben-text">Sabores reales de Cuba, con ingredientes frescos y el amor de Yohandra en cada plato.</p>
+      </div>
+      <div class="ben-card reveal"><span class="ben-icon">🛵</span>
+        <div class="ben-title">Delivery Rápido</div>
+        <p class="ben-text">Tu pedido llega caliente a tu puerta. Coordinamos por WhatsApp en minutos.</p>
+      </div>
+      <div class="ben-card reveal"><span class="ben-icon">🎉</span>
+        <div class="ben-title">Buffets por Encargo</div>
+        <p class="ben-text">Organizamos el catering de tu evento. Avisanos con tiempo y armamos el menú ideal.</p>
+      </div>
+      <div class="ben-card reveal"><span class="ben-icon">✨</span>
+        <div class="ben-title">Pedido Especial</div>
+        <p class="ben-text">¿Antojo de algo fuera del menú? Consultanos. Si Yohandra puede, lo cocina para Ud.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENÚ -->
+  <section id="menu">
+    <div class="reveal">
+      <div class="sec-label">Elige tu pedido</div>
+      <h2 class="sec-title">Nuestro <span>Menú</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="menu-tabs reveal">
+      <button class="tab-btn active" data-tab="platos">🍖 Platos del Día</button>
+      <button class="tab-btn" data-tab="postres">🍮 Bebidas & Postres</button>
+      <button class="tab-btn" data-tab="crudos">🥩 Productos Crudos</button>
+    </div>
+    <div id="tab-platos" class="menu-panel active">
+      <div class="menu-grid" id="grid-platos"></div>
+    </div>
+    <div id="tab-postres" class="menu-panel">
+      <div class="menu-grid" id="grid-postres"></div>
+    </div>
+    <div id="tab-crudos" class="menu-panel">
+      <p class="menu-note-var">* Disponibilidad varía cada día. Consultanos antes de pedir.</p>
+      <div class="menu-grid" id="grid-crudos"></div>
+    </div>
+    <div class="menu-aviso reveal">
+      📋 <strong>Menú variable:</strong> los platos pueden cambiar cada día. ¿No encuentras lo que buscas? ¡Escríbenos!
+    </div>
+  </section>
+
+  <!-- CARRITO FLOTANTE -->
+  <div id="cart-bar">
+    <div id="cart-count">0</div>
+    <span id="cart-total">$0</span>
+    <button id="view-cart-btn">Ver pedido 👀</button>
+  </div>
+
+  <!-- MODAL COMBO -->
+  <div class="modal-overlay" id="comboModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="combo-title">Armá tu comida</span>
+        <button class="modal-close" id="combo-close-btn">✕</button>
+      </div>
+
+      <p class="combo-subtitle">Personalizá tu pedido quitando lo que no querés</p>
+
+      <!-- ARROZ -->
+      <div class="combo-section">
+        <div class="combo-section-title">🍚 Tipo de arroz</div>
+        <div class="combo-opts" id="combo-arroz">
+          <div class="combo-opt selected" data-value="Arroz Blanco">Arroz Blanco</div>
+          <div class="combo-opt" data-value="Arroz Moro">Arroz Moro</div>
+          <div class="combo-opt" data-value="Arroz Amarillo">Arroz Amarillo</div>
+          <div class="combo-opt no-opt" data-value="Sin arroz">Sin arroz</div>
+        </div>
+      </div>
+
+      <!-- GUARNICIÓN -->
+      <div class="combo-section">
+        <div class="combo-section-title">🍟 Guarnición</div>
+        <div class="combo-opts" id="combo-guarni">
+          <div class="combo-opt selected" data-value="Papas Fritas">Papas Fritas</div>
+          <div class="combo-opt" data-value="Tostones">Tostones</div>
+          <div class="combo-opt no-opt" data-value="Sin guarnición">Sin guarnición</div>
+        </div>
+      </div>
+
+      <!-- ENSALADA -->
+      <div class="combo-section">
+        <div class="combo-section-title">🥗 Ensalada</div>
+        <div class="combo-opts" id="combo-ensalada">
+          <div class="combo-opt selected" data-value="Con ensalada">Incluida ✅</div>
+          <div class="combo-opt no-opt" data-value="Sin ensalada">Sin ensalada</div>
+        </div>
+      </div>
+
+      <button class="send-order-btn" id="combo-add-btn">🛒 Agregar al carrito</button>
+    </div>
+  </div>
+
+  <!-- MODAL CARRITO -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Tu Pedido 🛒</span>
+        <button class="modal-close" id="modal-close-btn">✕</button>
+      </div>
+      <div id="cart-items-list"></div>
+      <div id="cart-checkout" style="display:none">
+        <div class="cart-total-row">
+          <span class="cart-total-label">Total</span>
+          <span class="cart-total-amount" id="modal-total">$0</span>
+        </div>
+        <div class="delivery-section">
+          <div class="opt-label">📦 ¿Cómo recibís tu pedido?</div>
+          <div class="delivery-opts">
+            <div class="delivery-opt selected" data-mode="Delivery">🛵 Delivery</div>
+            <div class="delivery-opt" data-mode="Retiro en local">🏠 Retiro en local</div>
+          </div>
+        </div>
+        <div class="payment-section">
+          <div class="opt-label">💳 Forma de pago</div>
+          <div class="payment-opts">
+            <div class="payment-opt selected" data-mode="Efectivo">💵 Efectivo</div>
+            <div class="payment-opt" data-mode="Tarjeta">💳 Tarjeta</div>
+            <div class="payment-opt" data-mode="Transferencia">📱 Transfer.</div>
+          </div>
+        </div>
+        <textarea class="notes-input" id="order-notes" rows="2"
+          placeholder="Dirección, piso, aclaraciones..."></textarea>
+        <button class="send-order-btn" id="send-order-btn">💬 Enviar pedido por WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESPECIALES -->
+  <section id="especiales">
+    <div class="text-center reveal">
+      <div class="sec-label">Nuestros servicios</div>
+      <h2 class="sec-title">¿Qué más <span>ofrecemos?</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="esp-grid">
+      <div class="esp-card reveal"><span class="esp-icon">🛵</span>
+        <div class="esp-title">Delivery a domicilio</div>
+        <p class="esp-text">Te llevamos la comida caliente a donde estés.</p>
+      </div>
+      <div class="esp-card reveal"><span class="esp-icon">🏠</span>
+        <div class="esp-title">Retiro en local</div>
+        <p class="esp-text">Coordinamos el horario de retiro por WhatsApp.</p>
+      </div>
+      <div class="esp-card reveal"><span class="esp-icon">🎊</span>
+        <div class="esp-title">Buffets por encargo</div>
+        <p class="esp-text">Para cumpleaños, reuniones y eventos. Consultanos.</p>
+      </div>
+      <div class="esp-card reveal"><span class="esp-icon">👩‍🍳</span>
+        <div class="esp-title">Pedidos especiales</div>
+        <p class="esp-text">Si no está en el menú, Yohandra lo cocina para Ud.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORIA -->
+  <section id="historia">
+    <div class="reveal">
+      <div class="sec-label">Quiénes somos</div>
+      <h2 class="sec-title">Cocina con <span>alma cubana</span></h2>
+      <div class="divider"></div>
+      <p class="historia-text">Son D'licias nació del corazón de Yohandra, trayendo a Uruguay los sabores auténticos de
+        Cuba. Cada receta lleva el sazón único que solo se aprende en la cocina de casa.</p>
+      <p class="historia-text">Hoy ofrecemos delivery, retiro en local y buffets por encargo. Porque para nosotros,
+        compartir comida es compartir cultura y alegría.</p>
+      <a href="https://wa.me/598092085838" class="btn btn-wa" target="_blank">💬 Contáctanos</a>
+    </div>
+    <div class="historia-img reveal">
+      <img src="img/paella.jpg" alt="Paella de Son D'licias">
+    </div>
+  </section>
+
+  <!-- CÓMO PEDIR -->
+  <section id="como">
+    <div class="text-center reveal">
+      <div class="sec-label">Fácil y rápido</div>
+      <h2 class="sec-title">¿Cómo <span>pedir?</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">1</div>
+        <div class="step-title">Elige tu pedido</div>
+        <p class="step-text">Explora el menú y haz click en "Agregar".</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">2</div>
+        <div class="step-title">Revisa el carrito</div>
+        <p class="step-text">Verifica tu pedido, elige delivery o retiro y la forma de pago.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">3</div>
+        <div class="step-title">Envia por WhatsApp</div>
+        <p class="step-text">Con un click se arma el mensaje y te conectamos directo.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">4</div>
+        <div class="step-title">¡A disfrutar!</div>
+        <p class="step-text">Confirmamos y preparamos. Recibes tu comida fresca. 🇨🇺</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="reveal">
+      <div class="sec-label">Hablemos</div>
+      <h2 class="sec-title">¿Listo para <span>pedir?</span></h2>
+      <div class="divider"></div>
+      <p class="contacto-sub">Estamos a un mensaje de distancia 🇨🇺</p>
+      <div class="contacto-btns">
+        <a href="https://wa.me/598092085838" class="btn btn-wa" target="_blank">💬 WhatsApp</a>
+        <a href="tel:+598092085838" class="btn btn-green">📞 Llamar</a>
+      </div>
+      <div class="contacto-info">
+        <p>🛵 Delivery disponible · 🏠 Retiro en local</p>
+        <p>🎉 Buffets y especiales: <a href="https://wa.me/598092085838">consultanos</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <strong>Son D'licias</strong> · Las Delicias de Yohandra · 🇨🇺 Cocina cubana auténtica</p>
+  </footer>
+
+  <!-- WA FLOTANTE -->
+  <a href="https://wa.me/598092085838" class="wa-float" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="#fff">
+      <path
+        d="M16 1C7.716 1 1 7.716 1 16c0 2.628.678 5.1 1.865 7.25L1 31l7.978-1.832A14.94 14.94 0 0 0 16 31c8.284 0 15-6.716 15-15S24.284 1 16 1zm0 27.5a12.44 12.44 0 0 1-6.33-1.73l-.454-.27-4.73 1.086 1.14-4.606-.297-.473A12.5 12.5 0 1 1 16 28.5zm6.844-9.17c-.375-.188-2.217-1.094-2.56-1.22-.344-.124-.594-.187-.844.188s-.969 1.22-1.188 1.47-.437.28-.812.094c-.375-.188-1.584-.584-3.016-1.86-1.115-.994-1.867-2.22-2.086-2.595-.218-.375-.023-.578.164-.765.169-.168.375-.438.563-.656.187-.22.25-.375.375-.625.124-.25.062-.47-.031-.656-.094-.188-.844-2.032-1.156-2.782-.305-.73-.614-.63-.844-.642l-.719-.013c-.25 0-.656.094-.999.47s-1.313 1.281-1.313 3.124 1.344 3.626 1.531 3.876c.188.25 2.645 4.04 6.407 5.665.895.387 1.594.618 2.138.79.898.285 1.716.245 2.362.149.72-.108 2.217-.907 2.53-1.782.312-.875.312-1.625.218-1.782-.093-.156-.343-.25-.718-.437z" />
+    </svg>
+  </a>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
