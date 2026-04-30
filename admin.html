@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin – Son D'licias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginScreen">
+    <div class="login-box">
+      <div class="login-logo">Son <span>D'licias</span></div>
+      <div class="login-subtitle">Panel de Administración</div>
+      <div class="login-form">
+        <input type="password" id="passwordInput" placeholder="Contraseña" class="login-input">
+        <button id="loginBtn" class="login-btn">Entrar</button>
+        <div id="loginError" class="login-error"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL ADMIN -->
+  <div id="adminPanel" style="display:none">
+
+    <!-- NAV ADMIN -->
+    <nav class="admin-nav">
+      <div class="admin-nav-logo">Son <span>D'licias</span> <em>Admin</em></div>
+      <div class="admin-nav-right">
+        <span class="admin-nav-user">👩‍🍳 Yohandra</span>
+        <button id="logoutBtn" class="logout-btn">Salir</button>
+      </div>
+    </nav>
+
+    <!-- CONTENIDO -->
+    <div class="admin-content">
+
+      <!-- TABS -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="platos">🍖 Platos del Día</button>
+        <button class="admin-tab" data-tab="postres">🍮 Bebidas & Postres</button>
+        <button class="admin-tab" data-tab="crudos">🥩 Productos Crudos</button>
+        <button class="admin-tab" data-tab="pedidos">📦 Pedidos</button>
+      </div>
+
+      <!-- PANEL PLATOS -->
+      <div id="panel-platos" class="admin-panel active">
+        <div class="panel-header">
+          <h2 class="panel-title">Platos del Día</h2>
+          <button class="btn-agregar" id="btnAgregarPlato">+ Agregar plato</button>
+        </div>
+        <div class="admin-grid" id="gridPlatos"></div>
+      </div>
+
+      <!-- PANEL POSTRES -->
+      <div id="panel-postres" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Bebidas & Postres</h2>
+          <button class="btn-agregar" id="btnAgregarPostre">+ Agregar</button>
+        </div>
+        <div class="admin-grid" id="gridPostres"></div>
+      </div>
+
+      <!-- PANEL CRUDOS -->
+      <div id="panel-crudos" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Productos Crudos</h2>
+          <button class="btn-agregar" id="btnAgregarCrudo">+ Agregar</button>
+        </div>
+        <div class="admin-grid" id="gridCrudos"></div>
+      </div>
+
+      <!-- PANEL PEDIDOS -->
+      <div id="panel-pedidos" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Pedidos Recibidos</h2>
+          <button class="btn-agregar" id="btnLimpiarPedidos">🗑️ Limpiar</button>
+        </div>
+        <div id="listaPedidos" class="pedidos-lista"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL AGREGAR/EDITAR -->
+  <div class="modal-overlay" id="modalItem">
+    <div class="modal-admin">
+      <div class="modal-admin-header">
+        <span class="modal-admin-title" id="modalItemTitle">Agregar plato</span>
+        <button class="modal-admin-close" id="modalItemClose">✕</button>
+      </div>
+      <div class="modal-admin-body">
+        <input type="text" id="itemEmoji" placeholder="Emoji (ej: 🍗)" class="admin-input">
+        <input type="text" id="itemNombre" placeholder="Nombre del plato" class="admin-input">
+        <input type="text" id="itemDesc" placeholder="Descripción corta" class="admin-input">
+        <input type="number" id="itemPrecio" placeholder="Precio (0 = incluido)" class="admin-input">
+        <div class="modal-admin-footer">
+          <button class="btn-cancelar" id="btnCancelarItem">Cancelar</button>
+          <button class="btn-guardar" id="btnGuardarItem">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
