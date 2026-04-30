@@ -4,14 +4,14 @@ const menuData = {
         { emoji: "🍗", name: "Pollo Asado", desc: "Al horno, jugoso y dorado", price: 250 },
         { emoji: "🍗", name: "Pollo Frito", desc: "Crocante por fuera, tierno por dentro", price: 250 },
         { emoji: "🥩", name: "Cerdo Asado", desc: "Carne de cerdo a la cubana", price: 250 },
-        { emoji: "🍖", name: "Churrasco de Cerdo", desc: "A la parrilla, con chimichurri", price: 250 },
-        { emoji: "🐟", name: "Suprema a la Plancha", desc: "Fresca y bien sazonada", price: 250 },
+        { emoji: "🥩", name: "Churrasco de Cerdo", desc: "A la parrilla, bien sazonado", price: 250 },
+        { emoji: "🍗", name: "Suprema a la Plancha", desc: "Pechuga de pollo encebollada a la plancha", price: 250 },
         { emoji: "🦐", name: "Camarones", desc: "Al ajillo o en salsa", price: 320 },
         { emoji: "🐟", name: "Filete de Pescado", desc: "Grillado o a la plancha", price: 300 },
-        { emoji: "🌭", name: "Mortadella Frita", desc: "Dorada y bien crocante", price: 230 },
+        { emoji: "🍖", name: "Mortadella Frita", desc: "Rodajas de mortadella bien doradas", price: 230 },
         { emoji: "🍗", name: "Picadillo de Pollo", desc: "Casero y muy sabroso", price: 230 },
         { emoji: "🌭", name: "Salchicha en Salsa", desc: "Con salsa cubana especial", price: 230 },
-        { emoji: "🥙", name: "Pan con Minutas", desc: "Clásico cubano irresistible", price: 150 },
+        { emoji: "🥖", name: "Pan con Minutas", desc: "Pan con filete de pescado empanizado", price: 150 },
         { emoji: "🌿", name: "Yuca con Chicharrones", desc: "La combinación perfecta", price: 300 },
         { emoji: "🥘", name: "Paella", desc: "La reina de los arroces", price: 300 },
     ],
@@ -22,13 +22,13 @@ const menuData = {
         { emoji: "🍮", name: "Porción de Flan", desc: "Caramelizado y cremoso", price: 100 },
     ],
     crudos: [
-        { emoji: "🐷", name: "Bondiola", desc: "Por kg", price: 185 },
+        { emoji: "🥩", name: "Bondiola", desc: "Por kg", price: 185 },
         { emoji: "🐔", name: "Pollo Entero", desc: "Por kg", price: 130 },
         { emoji: "🍗", name: "Pechuga", desc: "Por kg", price: 320 },
         { emoji: "🥩", name: "Paleta Deshuesada", desc: "Por kg", price: 190 },
         { emoji: "🥩", name: "Solomillo", desc: "Por kg", price: 190 },
         { emoji: "🐟", name: "Filete de Pescado", desc: "Por kg", price: 320 },
-        { emoji: "🌭", name: "Mortadella", desc: "Por kg", price: 580 },
+        { emoji: "🍖", name: "Mortadella", desc: "Por kg", price: 580 },
         { emoji: "🌭", name: "Salchichas", desc: "Por kg", price: 580 },
         { emoji: "🫀", name: "Hígado", desc: "Por kg", price: 100 },
         { emoji: "🍗", name: "Alas de Pollo", desc: "Por kg", price: 85 },
@@ -36,7 +36,7 @@ const menuData = {
         { emoji: "🦐", name: "Camarones", desc: "Por kg", price: 680 },
         { emoji: "🧄", name: "Ajo Pelado", desc: "Por kg", price: 300 },
         { emoji: "🌿", name: "Paquete de Yuca", desc: "Precio por paquete", price: 320 },
-    ]
+    ],
 };
 
 // ===== CARRITO =====
@@ -82,8 +82,11 @@ ${item.price > 0
                 emoji: btn.dataset.emoji
             };
             // Si es plato principal abre el combo, si no agrega directo
+            const platosSimples = ["Pan con Minutas", "Yuca con Chicharrones", "Paella"];
             const esPlatoPrincipal = menuData.platos.some(p => p.name === item.name);
-            if (esPlatoPrincipal) {
+            const esPlatoSimple = platosSimples.includes(item.name);
+
+            if (esPlatoPrincipal && !esPlatoSimple) {
                 openCombo(item);
             } else {
                 addToCart(item);
@@ -391,4 +394,101 @@ document.addEventListener("DOMContentLoaded", () => {
     initEvents();
     initComboOpts();
     initReveal();
+    initIngredientes();
+    initContador();
+    initFaq();
 });
+
+// ===== FAQ =====
+function initFaq() {
+    document.querySelectorAll(".faq-pregunta").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const respuesta = btn.nextElementSibling;
+            const estaAbierto = respuesta.classList.contains("open");
+
+            // Cerrar todos
+            document.querySelectorAll(".faq-respuesta").forEach(r => r.classList.remove("open"));
+            document.querySelectorAll(".faq-pregunta").forEach(b => b.classList.remove("active"));
+
+            // Abrir el clickeado si estaba cerrado
+            if (!estaAbierto) {
+                respuesta.classList.add("open");
+                btn.classList.add("active");
+            }
+        });
+    });
+}
+
+// ===== CONTADOR ANIMADO =====
+function initContador() {
+    const contadores = document.querySelectorAll(".contador-num");
+
+    function animarContador(el) {
+        const target = parseInt(el.dataset.target);
+        const duracion = 2000;
+        const inicio = performance.now();
+
+        function animar(ahora) {
+            const transcurrido = ahora - inicio;
+            const progreso = Math.min(transcurrido / duracion, 1);
+            const easeOut = 1 - Math.pow(1 - progreso, 3);
+            el.textContent = Math.floor(easeOut * target);
+
+            if (progreso < 1) {
+                requestAnimationFrame(animar);
+            } else {
+                el.textContent = target + "+";
+            }
+        }
+
+        requestAnimationFrame(animar);
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animarContador(entry.target);
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3, rootMargin: "0px 0px -50px 0px" });
+
+    contadores.forEach(el => obs.observe(el));
+}
+
+// ===== INGREDIENTES FLOTANTES =====
+function initIngredientes() {
+    const ingredientes = [
+        "🍗", "🥩", "🐟", "🦐", "🌿", "🧄", "🥘",
+        "🍋", "🫑", "🧅", "🥕", "🌶️", "🍅", "🫒",
+        "🥗", "🍖", "🌭", "🥚", "🧂", "🫙"
+    ];
+
+    const contenedor = document.getElementById("ingredientesFlotantes");
+    if (!contenedor) return;
+
+    const cantidad = 18;
+
+    for (let i = 0; i < cantidad; i++) {
+        const el = document.createElement("div");
+        el.className = "ingrediente";
+
+        // Emoji aleatorio
+        el.textContent = ingredientes[Math.floor(Math.random() * ingredientes.length)];
+
+        // Posición horizontal aleatoria
+        el.style.left = Math.random() * 100 + "vw";
+
+        // Tamaño variado
+        const size = 1.2 + Math.random() * 1.4;
+        el.style.fontSize = size + "rem";
+
+        // Duración y delay aleatorios
+        const duracion = 18 + Math.random() * 22;
+        const delay = Math.random() * 20;
+        el.style.animationDuration = duracion + "s";
+        el.style.animationDelay = delay + "s";
+
+        contenedor.appendChild(el);
+    }
+}
