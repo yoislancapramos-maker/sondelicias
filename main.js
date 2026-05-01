@@ -1,6 +1,6 @@
 // ===== FIREBASE =====
 import { db } from './firebase.js';
-import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { collection, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ===== DATOS DEL MENÚ =====
 const menuData = {
@@ -226,7 +226,7 @@ function closeCart() {
 }
 
 // ===== ENVIAR PEDIDO POR WHATSAPP =====
-function sendOrder() {
+async function sendOrder() {
     if (cart.length === 0) return;
     const notes = document.getElementById("order-notes").value;
     const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
@@ -242,6 +242,22 @@ function sendOrder() {
     msg += `\n📦 *Entrega: ${deliveryMode}*`;
     msg += `\n💳 *Pago: ${paymentMode}*`;
     if (notes) msg += `\n📝 *Notas: ${notes}*`;
+
+    // Guardar pedido en Firebase
+    try {
+        await addDoc(collection(db, "pedidos"), {
+            items: cart.map(i => `${i.emoji} ${i.name} x${i.qty} — $${i.price * i.qty}${i.desc ? ` (${i.desc})` : ""}`).join("\n"),
+            total,
+            entrega: deliveryMode,
+            pago: paymentMode,
+            notas: notes || "",
+            hora: new Date().toLocaleString("es-UY"),
+            estado: "pendiente",
+            origen: "landing"
+        });
+    } catch (e) {
+        console.error("Error guardando pedido:", e);
+    }
 
     const url = "https://wa.me/598092085838?text=" + encodeURIComponent(msg);
     window.open(url, "_blank");
