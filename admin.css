@@ -725,3 +725,11 @@ body {
 }
 
 .pedido-eliminar:hover { background: rgba(200,24,26,.3); }
+
+.admin-card-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}

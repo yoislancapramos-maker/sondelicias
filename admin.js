@@ -130,7 +130,10 @@ function crearCard(item, cat) {
   div.className = "admin-card";
   div.innerHTML = `
     <div class="admin-card-top">
-      <span class="admin-card-emoji">${item.emoji}</span>
+${item.icono
+      ? `<img src="img/${item.icono}" alt="${item.name}" class="admin-card-img">`
+      : `<span class="admin-card-emoji">${item.emoji}</span>`
+    }
       <div class="admin-card-info">
         <div class="admin-card-name">${item.name}</div>
         <div class="admin-card-desc">${item.desc}</div>
@@ -187,6 +190,8 @@ function abrirModal(cat, item = null) {
   document.getElementById("itemNombre").value = item ? item.name : "";
   document.getElementById("itemDesc").value = item ? item.desc : "";
   document.getElementById("itemPrecio").value = item ? item.price : "";
+  document.getElementById("itemImagen").value = item ? (item.imagen || "") : "";
+  document.getElementById("itemIcono").value = item ? (item.icono || "") : "";
   document.getElementById("modalItem").classList.add("open");
 }
 
@@ -207,7 +212,9 @@ document.getElementById("btnGuardarItem").addEventListener("click", async () => 
 
   if (!name) return;
 
-  const datos = { emoji, name, desc, price, activo: true };
+  const imagen = document.getElementById("itemImagen").value.trim();
+  const icono = document.getElementById("itemIcono").value.trim();
+  const datos = { emoji, name, desc, price, activo: true, imagen: imagen || "", icono: icono || "" };
 
   if (editandoId) {
     await updateDoc(doc(db, editandoCat, editandoId), datos);
