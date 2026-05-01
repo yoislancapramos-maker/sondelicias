@@ -9,8 +9,8 @@ let currentComboItem = null;
 
 // ===== FECHA =====
 function mostrarFecha() {
-  const dias = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-  const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+  const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
   const hoy = new Date();
   document.getElementById("menuFecha").textContent =
     `${dias[hoy.getDay()]}, ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}`;
@@ -19,9 +19,16 @@ function mostrarFecha() {
 // ===== CARGAR MENÚ DESDE FIREBASE =====
 function cargarMenu() {
   ["platos", "postres", "crudos"].forEach(cat => {
+    // Mostrar skeleton
+    const grid = document.getElementById("grid-" + cat);
+    if (!grid) return;
+    grid.innerHTML = `
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+    `;
+
     onSnapshot(collection(db, cat), snap => {
-      const grid = document.getElementById("grid-" + cat);
-      if (!grid) return;
       grid.innerHTML = "";
 
       snap.forEach(docSnap => {
@@ -43,9 +50,9 @@ function cargarMenu() {
             <div class="menu-item-right">
               <span class="menu-price">${item.price > 0 ? "$" + item.price : "Incl."}</span>
               ${item.price > 0
-                ? `<button class="add-btn" data-name="${item.name}" data-price="${item.price}" data-emoji="${item.emoji}">+ Agregar</button>`
-                : `<span class="incl-tag">🎁 Incluido</span>`
-              }
+            ? `<button class="add-btn" data-name="${item.name}" data-price="${item.price}" data-emoji="${item.emoji}">+ Agregar</button>`
+            : `<span class="incl-tag">🎁 Incluido</span>`
+          }
             </div>
           </div>
         `;

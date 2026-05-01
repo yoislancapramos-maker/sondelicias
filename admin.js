@@ -108,8 +108,14 @@ async function cargarOInicializarDatos() {
 
 // ===== ESCUCHAR CAMBIOS EN TIEMPO REAL =====
 function escucharCambios(cat, gridId) {
+  const grid = document.getElementById(gridId);
+  grid.innerHTML = `
+    <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+  `;
+
   onSnapshot(collection(db, cat), snap => {
-    const grid = document.getElementById(gridId);
     grid.innerHTML = "";
     snap.forEach(docSnap => {
       const item = { id: docSnap.id, ...docSnap.data() };
@@ -135,6 +141,7 @@ function crearCard(item, cat) {
       <button class="toggle-btn ${item.activo ? "activo" : "inactivo"}" data-id="${item.id}" data-cat="${cat}" data-activo="${item.activo}">
         ${item.activo ? "✅ Activo" : "❌ Inactivo"}
       </button>
+      ${cat === "platos" ? `<button class="destacar-btn ${item.destacado ? 'destacado-activo' : ''}" title="${item.destacado ? 'Quitar destacado' : 'Marcar como plato del día'}">⭐</button>` : ""}
       <button class="edit-btn" data-id="${item.id}" data-cat="${cat}">✏️ Editar</button>
       <button class="delete-btn" data-id="${item.id}" data-cat="${cat}">🗑️</button>
     </div>
@@ -146,6 +153,24 @@ function crearCard(item, cat) {
     const activo = btn.dataset.activo === "true";
     await updateDoc(doc(db, cat, item.id), { activo: !activo });
   });
+
+  // Destacar
+  const destacarBtn = div.querySelector(".destacar-btn");
+  if (destacarBtn) {
+    destacarBtn.addEventListener("click", async () => {
+      // Si ya está destacado, lo desmarca
+      if (item.destacado) {
+        await updateDoc(doc(db, cat, item.id), { destacado: false });
+      } else {
+        // Quitar destacado de todos y marcar este
+        const snap = await getDocs(collection(db, cat));
+        snap.forEach(async d => {
+          await updateDoc(doc(db, cat, d.id), { destacado: false });
+        });
+        await updateDoc(doc(db, cat, item.id), { destacado: true });
+      }
+    });
+  }
 
   // Editar
   div.querySelector(".edit-btn").addEventListener("click", () => {
