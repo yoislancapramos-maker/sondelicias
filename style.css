@@ -1669,3 +1669,232 @@ footer strong {
         grid-template-columns: 1fr;
     }
 }
+
+/* ===== GRUPO WHATSAPP ===== */
+#grupo {
+    background: linear-gradient(135deg, #0d2e0d 0%, #1a5f1a 50%, #0d2e0d 100%);
+    padding: 80px 6%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    #grupo {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .grupo-features {
+        justify-content: center;
+    }
+}
+
+.grupo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245, 200, 0, .15);
+    border: 1px solid rgba(245, 200, 0, .3);
+    color: var(--amarillo);
+    font-size: .75rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+}
+
+.grupo-titulo {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+
+.grupo-titulo span {
+    color: var(--amarillo);
+}
+
+.grupo-texto {
+    color: rgba(255, 255, 255, .75);
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 600;
+    margin-bottom: 28px;
+    max-width: 480px;
+}
+
+.grupo-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 32px;
+}
+
+.grupo-feature {
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .15);
+    color: rgba(255, 255, 255, .85);
+    font-size: .85rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 999px;
+}
+
+.btn-grupo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25d366;
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    padding: 16px 36px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: .2s;
+    box-shadow: 0 8px 24px rgba(37, 211, 102, .4);
+}
+
+.btn-grupo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(37, 211, 102, .6);
+}
+
+.grupo-nota {
+    color: rgba(255, 255, 255, .3);
+    font-size: .75rem;
+    font-weight: 600;
+    margin-top: 14px;
+    font-style: italic;
+}
+
+/* ===== MOCKUP TELEFONO ===== */
+.grupo-mockup {
+    display: flex;
+    justify-content: center;
+}
+
+.mockup-phone {
+    width: min(300px, 85vw);
+    background: #111;
+    border-radius: 36px;
+    padding: 16px;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, .5),
+        0 0 0 2px rgba(255, 255, 255, .1);
+    position: relative;
+}
+
+.mockup-phone::before {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 6px;
+    background: rgba(255, 255, 255, .2);
+    border-radius: 999px;
+    margin: 0 auto 12px;
+}
+
+.mockup-screen {
+    background: #0b1e0b;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.mockup-header {
+    background: #128c3f;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mockup-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rojo), var(--amarillo));
+    color: #fff;
+    font-weight: 900;
+    font-size: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mockup-name {
+    color: #fff;
+    font-weight: 800;
+    font-size: .88rem;
+}
+
+.mockup-members {
+    color: rgba(255, 255, 255, .7);
+    font-size: .72rem;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.mockup-messages {
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mockup-msg {
+    background: rgba(255, 255, 255, .07);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .82rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, .85);
+}
+
+.mockup-msg.destacado {
+    background: rgba(245, 200, 0, .15);
+    border: 1px solid rgba(245, 200, 0, .3);
+    color: var(--amarillo);
+}
+
+.mockup-msg-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.mockup-msg span:nth-child(2) {
+    flex: 1;
+}
+
+.mockup-msg-price {
+    font-weight: 900;
+    color: var(--verde2);
+    font-size: .8rem;
+    white-space: nowrap;
+}
+
+.mockup-msg.destacado .mockup-msg-price {
+    color: var(--amarillo);
+}
+
+.mockup-btn {
+    margin: 4px 12px 14px;
+    background: #25d366;
+    color: #fff;
+    font-weight: 900;
+    font-size: .82rem;
+    padding: 10px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+}
