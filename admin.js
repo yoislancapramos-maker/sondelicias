@@ -335,7 +335,7 @@ document.getElementById("btnGenerarMensaje").addEventListener("click", async () 
 
   msg += `${"─".repeat(28)}\n\n`;
   msg += `📲 *Realiza tu pedido aquí:*\n`;
-  msg += `📌 sondelicias.vercel.app/menu.html\n\n`;
+  msg += `📌 sondelicias.vercel.app/menu\n\n`;
   msg += `📞 *Pedidos:* 092 085 838\n`;
   msg += `🛵 Delivery · 🏠 Retiro en local\n`;
   msg += `_¡Más que un antojo!_ 🤤`;
