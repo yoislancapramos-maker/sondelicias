@@ -663,8 +663,8 @@ body {
 
 /* ===== MENSAJE DIARIO ===== */
 .mensaje-preview {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 16px;
@@ -672,7 +672,7 @@ body {
 }
 
 .mensaje-vacio {
-  color: rgba(255,255,255,.35);
+  color: rgba(255, 255, 255, .35);
   font-size: .9rem;
   font-weight: 600;
   text-align: center;
@@ -680,7 +680,7 @@ body {
 }
 
 .mensaje-texto {
-  color: rgba(255,255,255,.85);
+  color: rgba(255, 255, 255, .85);
   font-family: 'Nunito', sans-serif;
   font-size: .88rem;
   line-height: 1.7;
@@ -702,10 +702,12 @@ body {
   transition: .2s;
 }
 
-.btn-copiar:hover { background: var(--verde2); }
+.btn-copiar:hover {
+  background: var(--verde2);
+}
 
 .pedido-notas {
-  color: rgba(255,255,255,.6);
+  color: rgba(255, 255, 255, .6);
   font-size: .82rem;
   font-weight: 600;
   font-style: italic;
@@ -713,7 +715,7 @@ body {
 }
 
 .pedido-eliminar {
-  background: rgba(200,24,26,.15);
+  background: rgba(200, 24, 26, .15);
   border: none;
   color: var(--rojo);
   border-radius: 999px;
@@ -724,7 +726,9 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
-.pedido-eliminar:hover { background: rgba(200,24,26,.3); }
+.pedido-eliminar:hover {
+  background: rgba(200, 24, 26, .3);
+}
 
 .admin-card-img {
   width: 48px;
@@ -732,4 +736,28 @@ body {
   border-radius: 10px;
   object-fit: cover;
   flex-shrink: 0;
+}
+
+/* ===== BADGE PEDIDOS ===== */
+.badge-pedidos {
+  background: var(--amarillo);
+  color: var(--oscuro);
+  font-size: .72rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 6px;
+  animation: pulse-badge 1.5s infinite;
+}
+
+@keyframes pulse-badge {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .6;
+  }
 }

@@ -236,6 +236,14 @@ function escucharPedidos() {
   lista.innerHTML = "<div class='pedidos-vacio'>⏳ Cargando pedidos...</div>";
 
   onSnapshot(collection(db, "pedidos"), snap => {
+    // Badge de notificación
+    const cantidad = snap.size;
+    const tab = document.querySelector(".admin-tab[data-tab='pedidos']");
+    if (tab) {
+      tab.innerHTML = cantidad > 0
+        ? `📦 Pedidos <span class="badge-pedidos">${cantidad}</span>`
+        : `📦 Pedidos`;
+    }
     if (snap.empty) {
       lista.innerHTML = "<div class='pedidos-vacio'>📭 No hay pedidos todavía</div>";
       return;
