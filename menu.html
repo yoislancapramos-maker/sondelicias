@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú del Día – Son D'licias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="menu-header">
+    <div class="menu-header-top">
+      <img src="img/logo.jpg" alt="Son D'licias" class="menu-logo-img">
+      <div class="menu-header-info">
+        <div class="menu-nombre">Son D'licias</div>
+        <div class="menu-subtitulo">Las Delicias de Yohandra 🇨🇺</div>
+      </div>
+    </div>
+    <div class="menu-fecha" id="menuFecha"></div>
+    <div class="menu-destacado-wrap" id="destacadoWrap" style="display:none">
+      <div class="menu-destacado" id="destacadoCard"></div>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <div class="menu-tabs-wrap">
+    <div class="menu-tabs">
+      <button class="menu-tab active" data-tab="platos">🍖 Platos</button>
+      <button class="menu-tab" data-tab="postres">🍮 Postres</button>
+      <button class="menu-tab" data-tab="crudos">🥩 Crudos</button>
+    </div>
+  </div>
+
+  <!-- PANELS -->
+  <main class="menu-main">
+    <div id="tab-platos" class="menu-panel active">
+      <div class="menu-grid" id="grid-platos"></div>
+    </div>
+    <div id="tab-postres" class="menu-panel">
+      <div class="menu-grid" id="grid-postres"></div>
+    </div>
+    <div id="tab-crudos" class="menu-panel">
+      <p class="menu-nota-var">* Disponibilidad varía cada día. Consultanos antes de pedir.</p>
+      <div class="menu-grid" id="grid-crudos"></div>
+    </div>
+  </main>
+
+  <!-- CARRITO FLOTANTE -->
+  <div id="cart-bar">
+    <div id="cart-count">0</div>
+    <span id="cart-total">$0</span>
+    <button id="view-cart-btn">Ver pedido 👀</button>
+  </div>
+
+  <!-- MODAL COMBO -->
+  <div class="modal-overlay" id="comboModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="combo-title">Armá tu comida</span>
+        <button class="modal-close" id="combo-close-btn">✕</button>
+      </div>
+      <p class="combo-subtitle">Personalizá tu pedido quitando lo que no querés</p>
+      <div class="combo-section">
+        <div class="combo-section-title">🍚 Tipo de arroz</div>
+        <div class="combo-opts" id="combo-arroz">
+          <div class="combo-opt selected" data-value="Arroz Blanco">Arroz Blanco</div>
+          <div class="combo-opt" data-value="Arroz Moro">Arroz Moro</div>
+          <div class="combo-opt" data-value="Arroz Amarillo">Arroz Amarillo</div>
+          <div class="combo-opt no-opt" data-value="Sin arroz">Sin arroz</div>
+        </div>
+      </div>
+      <div class="combo-section">
+        <div class="combo-section-title">🍟 Guarnición</div>
+        <div class="combo-opts" id="combo-guarni">
+          <div class="combo-opt selected" data-value="Papas Fritas">Papas Fritas</div>
+          <div class="combo-opt" data-value="Tostones">Tostones</div>
+          <div class="combo-opt no-opt" data-value="Sin guarnición">Sin guarnición</div>
+        </div>
+      </div>
+      <div class="combo-section">
+        <div class="combo-section-title">🥗 Ensalada</div>
+        <div class="combo-opts" id="combo-ensalada">
+          <div class="combo-opt selected" data-value="Con ensalada">Incluida ✅</div>
+          <div class="combo-opt no-opt" data-value="Sin ensalada">Sin ensalada</div>
+        </div>
+      </div>
+      <button class="send-order-btn" id="combo-add-btn">🛒 Agregar al carrito</button>
+    </div>
+  </div>
+
+  <!-- MODAL CARRITO -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Tu Pedido 🛒</span>
+        <button class="modal-close" id="modal-close-btn">✕</button>
+      </div>
+      <div id="cart-items-list"></div>
+      <div id="cart-checkout" style="display:none">
+        <div class="cart-total-row">
+          <span class="cart-total-label">Total</span>
+          <span class="cart-total-amount" id="modal-total">$0</span>
+        </div>
+        <div class="delivery-section">
+          <div class="opt-label">📦 ¿Cómo recibís tu pedido?</div>
+          <div class="delivery-opts">
+            <div class="delivery-opt selected" data-mode="Delivery">🛵 Delivery</div>
+            <div class="delivery-opt" data-mode="Retiro en local">🏠 Retiro en local</div>
+          </div>
+        </div>
+        <div class="payment-section">
+          <div class="opt-label">💳 Forma de pago</div>
+          <div class="payment-opts">
+            <div class="payment-opt selected" data-mode="Efectivo">💵 Efectivo</div>
+            <div class="payment-opt" data-mode="Tarjeta">💳 Tarjeta</div>
+            <div class="payment-opt" data-mode="Transferencia">📱 Transfer.</div>
+          </div>
+        </div>
+        <textarea class="notes-input" id="order-notes" rows="2" placeholder="Dirección, piso, aclaraciones..."></textarea>
+        <button class="send-order-btn" id="send-order-btn">💬 Enviar pedido por WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WA FLOTANTE -->
+  <a href="https://wa.me/598092085838" class="wa-float" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="#fff">
+      <path d="M16 1C7.716 1 1 7.716 1 16c0 2.628.678 5.1 1.865 7.25L1 31l7.978-1.832A14.94 14.94 0 0 0 16 31c8.284 0 15-6.716 15-15S24.284 1 16 1zm0 27.5a12.44 12.44 0 0 1-6.33-1.73l-.454-.27-4.73 1.086 1.14-4.606-.297-.473A12.5 12.5 0 1 1 16 28.5zm6.844-9.17c-.375-.188-2.217-1.094-2.56-1.22-.344-.124-.594-.187-.844.188s-.969 1.22-1.188 1.47-.437.28-.812.094c-.375-.188-1.584-.584-3.016-1.86-1.115-.994-1.867-2.22-2.086-2.595-.218-.375-.023-.578.164-.765.169-.168.375-.438.563-.656.187-.22.25-.375.375-.625.124-.25.062-.47-.031-.656-.094-.188-.844-2.032-1.156-2.782-.305-.73-.614-.63-.844-.642l-.719-.013c-.25 0-.656.094-.999.47s-1.313 1.281-1.313 3.124 1.344 3.626 1.531 3.876c.188.25 2.645 4.04 6.407 5.665.895.387 1.594.618 2.138.79.898.285 1.716.245 2.362.149.72-.108 2.217-.907 2.53-1.782.312-.875.312-1.625.218-1.782-.093-.156-.343-.25-.718-.437z"/>
+    </svg>
+  </a>
+
+  <script type="module" src="menu.js"></script>
+</body>
+</html>
