@@ -93,26 +93,28 @@ function cargarMenu() {
 // ===== CARGAR DESTACADO =====
 function cargarDestacado() {
   onSnapshot(collection(db, "platos"), snap => {
-    let destacado = null;
+    const destacados = [];
     snap.forEach(docSnap => {
       const item = docSnap.data();
-      if (item.destacado && item.activo) destacado = item;
+      if (item.destacado && item.activo) destacados.push(item);
     });
 
     const wrap = document.getElementById("destacadoWrap");
     const card = document.getElementById("destacadoCard");
 
-    if (destacado) {
+    if (destacados.length > 0) {
       wrap.style.display = "block";
-      card.innerHTML = `
-        <span class="destacado-badge">🔥 Plato del día</span>
-        <span class="destacado-emoji">${destacado.emoji}</span>
-        <div class="destacado-info">
-          <div class="destacado-name">${destacado.name}</div>
-          <div class="destacado-desc">${destacado.desc}</div>
+      card.innerHTML = destacados.map(item => `
+        <div class="destacado-item">
+          <span class="destacado-badge">🔥 Plato del día</span>
+          <span class="destacado-emoji">${item.emoji}</span>
+          <div class="destacado-info">
+            <div class="destacado-name">${item.name}</div>
+            <div class="destacado-desc">${item.desc}</div>
+          </div>
+          <span class="destacado-price">$${item.price}</span>
         </div>
-        <span class="destacado-price">$${destacado.price}</span>
-      `;
+      `).join("");
     } else {
       wrap.style.display = "none";
     }

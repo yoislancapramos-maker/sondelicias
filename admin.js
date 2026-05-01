@@ -158,17 +158,8 @@ function crearCard(item, cat) {
   const destacarBtn = div.querySelector(".destacar-btn");
   if (destacarBtn) {
     destacarBtn.addEventListener("click", async () => {
-      // Si ya está destacado, lo desmarca
-      if (item.destacado) {
-        await updateDoc(doc(db, cat, item.id), { destacado: false });
-      } else {
-        // Quitar destacado de todos y marcar este
-        const snap = await getDocs(collection(db, cat));
-        snap.forEach(async d => {
-          await updateDoc(doc(db, cat, d.id), { destacado: false });
-        });
-        await updateDoc(doc(db, cat, item.id), { destacado: true });
-      }
+      // Toggle destacado — permite varios al mismo tiempo
+      await updateDoc(doc(db, cat, item.id), { destacado: !item.destacado });
     });
   }
 
