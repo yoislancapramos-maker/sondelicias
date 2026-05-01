@@ -225,36 +225,57 @@ document.getElementById("btnAgregarCrudo").addEventListener("click", () => abrir
 
 // ===== PEDIDOS =====
 function escucharPedidos() {
-  const pedidosGuardados = JSON.parse(localStorage.getItem("pedidos") || "[]");
-  renderPedidos(pedidosGuardados);
-}
-
-function renderPedidos(pedidos) {
   const lista = document.getElementById("listaPedidos");
-  if (pedidos.length === 0) {
-    lista.innerHTML = "<div class='pedidos-vacio'>📭 No hay pedidos todavía</div>";
-    return;
-  }
-  lista.innerHTML = pedidos.map((p, i) => `
-    <div class="pedido-card">
-      <div class="pedido-header">
-        <span class="pedido-num">Pedido #${i + 1}</span>
-        <span class="pedido-hora">${p.hora || ""}</span>
+  lista.innerHTML = "<div class='pedidos-vacio'>⏳ Cargando pedidos...</div>";
+
+  onSnapshot(collection(db, "pedidos"), snap => {
+    if (snap.empty) {
+      lista.innerHTML = "<div class='pedidos-vacio'>📭 No hay pedidos todavía</div>";
+      return;
+    }
+
+    const pedidos = [];
+    snap.forEach(docSnap => {
+      pedidos.push({ id: docSnap.id, ...docSnap.data() });
+    });
+
+    // Ordenar por hora más reciente
+    pedidos.sort((a, b) => new Date(b.hora) - new Date(a.hora));
+
+    lista.innerHTML = pedidos.map((p, i) => `
+      <div class="pedido-card">
+        <div class="pedido-header">
+          <span class="pedido-num">🛒 Pedido #${pedidos.length - i}</span>
+          <span class="pedido-hora">${p.hora || ""}</span>
+        </div>
+        <div class="pedido-items">${(p.items || "").replace(/\n/g, "<br>")}</div>
+        ${p.notas ? `<div class="pedido-notas">📝 ${p.notas}</div>` : ""}
+        <div class="pedido-footer">
+          <span class="pedido-tag total">💰 $${p.total || 0}</span>
+          <span class="pedido-tag entrega">📦 ${p.entrega || ""}</span>
+          <span class="pedido-tag pago">💳 ${p.pago || ""}</span>
+          <button class="pedido-eliminar" data-id="${p.id}">🗑️</button>
+        </div>
       </div>
-      <div class="pedido-items">${p.items || ""}</div>
-      <div class="pedido-footer">
-        <span class="pedido-tag total">💰 $${p.total || 0}</span>
-        <span class="pedido-tag entrega">📦 ${p.entrega || ""}</span>
-        <span class="pedido-tag pago">💳 ${p.pago || ""}</span>
-      </div>
-    </div>
-  `).join("");
+    `).join("");
+
+    // Eliminar pedido individual
+    document.querySelectorAll(".pedido-eliminar").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        if (confirm("¿Eliminar este pedido?")) {
+          await deleteDoc(doc(db, "pedidos", btn.dataset.id));
+        }
+      });
+    });
+  });
 }
 
-document.getElementById("btnLimpiarPedidos").addEventListener("click", () => {
+document.getElementById("btnLimpiarPedidos").addEventListener("click", async () => {
   if (confirm("¿Limpiar todos los pedidos?")) {
-    localStorage.removeItem("pedidos");
-    renderPedidos([]);
+    const snap = await getDocs(collection(db, "pedidos"));
+    snap.forEach(async docSnap => {
+      await deleteDoc(doc(db, "pedidos", docSnap.id));
+    });
   }
 });
 

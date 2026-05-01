@@ -703,3 +703,25 @@ body {
 }
 
 .btn-copiar:hover { background: var(--verde2); }
+
+.pedido-notas {
+  color: rgba(255,255,255,.6);
+  font-size: .82rem;
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.pedido-eliminar {
+  background: rgba(200,24,26,.15);
+  border: none;
+  color: var(--rojo);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: .2s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.pedido-eliminar:hover { background: rgba(200,24,26,.3); }
