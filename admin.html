@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Admin – Son D'licias</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
 
   <!-- LOGIN -->
@@ -43,6 +46,7 @@
         <button class="admin-tab active" data-tab="platos">🍖 Platos del Día</button>
         <button class="admin-tab" data-tab="postres">🍮 Bebidas & Postres</button>
         <button class="admin-tab" data-tab="crudos">🥩 Productos Crudos</button>
+        <button class="admin-tab" data-tab="mensaje">📲 Mensaje del día</button>
         <button class="admin-tab" data-tab="pedidos">📦 Pedidos</button>
       </div>
 
@@ -71,6 +75,18 @@
           <button class="btn-agregar" id="btnAgregarCrudo">+ Agregar</button>
         </div>
         <div class="admin-grid" id="gridCrudos"></div>
+      </div>
+
+      <!-- PANEL MENSAJE DIARIO -->
+      <div id="panel-mensaje" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">📲 Mensaje del Día</h2>
+          <button class="btn-agregar" id="btnGenerarMensaje">✨ Generar mensaje</button>
+        </div>
+        <div class="mensaje-preview" id="mensajePreview">
+          <div class="mensaje-vacio">Marcá los platos destacados del día con ⭐ y después generá el mensaje.</div>
+        </div>
+        <button class="btn-copiar" id="btnCopiarMensaje" style="display:none">📋 Copiar mensaje</button>
       </div>
 
       <!-- PANEL PEDIDOS -->
@@ -107,4 +123,5 @@
 
   <script type="module" src="admin.js"></script>
 </body>
+
 </html>

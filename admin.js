@@ -257,3 +257,63 @@ document.getElementById("btnLimpiarPedidos").addEventListener("click", () => {
     renderPedidos([]);
   }
 });
+
+// ===== MENSAJE DIARIO =====
+document.getElementById("btnGenerarMensaje").addEventListener("click", async () => {
+  const snap = await getDocs(collection(db, "platos"));
+  const destacados = [];
+  snap.forEach(docSnap => {
+    const item = docSnap.data();
+    if (item.destacado && item.activo) destacados.push(item);
+  });
+
+  const hoy = new Date();
+  const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+  const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const fecha = `${dias[hoy.getDay()]} ${hoy.getDate()} de ${meses[hoy.getMonth()]}`;
+
+  let msg = "";
+  msg += `🇨🇺 *SON D'LICIAS* 🇨🇺\n`;
+  msg += `_Las Delicias de Yohandra_\n\n`;
+  msg += `📅 *Menú del día — ${fecha}*\n`;
+  msg += `${"─".repeat(28)}\n\n`;
+
+  if (destacados.length > 0) {
+    msg += `🔥 *DESTACADOS DE HOY*\n\n`;
+    destacados.forEach(item => {
+      msg += `${item.emoji} *${item.name}*\n`;
+      msg += `   ${item.desc}\n`;
+      msg += `   💰 $${item.price}\n`;
+      msg += `   🍚 Con arroz a elección · 🥗 Ensalada · 🍟 Papas o tostones\n\n`;
+    });
+    msg += `${"─".repeat(28)}\n\n`;
+  }
+
+  if (destacados.length === 0) {
+    msg += `🍽️ *¡Hoy tenemos el menú completo disponible!*\n`;
+    msg += `Entra al link y elige lo que más te gusta.\n\n`;
+  } else {
+    msg += `🍽️ *¡Y hay más opciones esperándote!*\n`;
+    msg += `Entra al menú y elige tu favorito.\n\n`;
+  }
+
+  msg += `${"─".repeat(28)}\n\n`;
+  msg += `📲 *Realiza tu pedido aquí:*\n`;
+  msg += `📌 sondelicias.vercel.app/menu.html\n\n`;
+  msg += `📞 *Pedidos:* 092 085 838\n`;
+  msg += `🛵 Delivery · 🏠 Retiro en local\n`;
+  msg += `_¡Más que un antojo!_ 🤤`;
+
+  const preview = document.getElementById("mensajePreview");
+  preview.innerHTML = `<pre class="mensaje-texto">${msg}</pre>`;
+
+  const btnCopiar = document.getElementById("btnCopiarMensaje");
+  btnCopiar.style.display = "block";
+  btnCopiar.onclick = () => {
+    navigator.clipboard.writeText(msg);
+    btnCopiar.textContent = "✅ ¡Copiado!";
+    setTimeout(() => {
+      btnCopiar.textContent = "📋 Copiar mensaje";
+    }, 2000);
+  };
+});
