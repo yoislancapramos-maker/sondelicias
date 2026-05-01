@@ -1,3 +1,7 @@
+// ===== FIREBASE =====
+import { db } from './firebase.js';
+import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 // ===== DATOS DEL MENÚ =====
 const menuData = {
     platos: [
@@ -44,61 +48,66 @@ let cart = [];
 let deliveryMode = "Delivery";
 let paymentMode = "Efectivo";
 
-// ===== CONSTRUIR GRILLAS DEL MENÚ =====
+// ===== CONSTRUIR GRILLAS DEL MENÚ DESDE FIREBASE =====
 function buildMenuGrids() {
-    Object.keys(menuData).forEach(cat => {
-        const grid = document.getElementById("grid-" + cat);
-        if (!grid) return;
+    ["platos", "postres", "crudos"].forEach(cat => {
+        onSnapshot(collection(db, cat), snap => {
+            const grid = document.getElementById("grid-" + cat);
+            if (!grid) return;
+            grid.innerHTML = "";
 
-        menuData[cat].forEach(item => {
-            const div = document.createElement("div");
-            div.className = "menu-item";
-            div.innerHTML = `
-        <div class="menu-item-left">
-          <span class="menu-item-emoji">${item.emoji}</span>
-          <div>
-            <div class="menu-item-name">${item.name}</div>
-            <div class="menu-item-desc">${item.desc}</div>
+            snap.forEach(docSnap => {
+                const item = { id: docSnap.id, ...docSnap.data() };
+                if (!item.activo) return;
+
+                const div = document.createElement("div");
+                div.className = "menu-item";
+                div.innerHTML = `
+          <div class="menu-item-left">
+            <span class="menu-item-emoji">${item.emoji}</span>
+            <div>
+              <div class="menu-item-name">${item.name}</div>
+              <div class="menu-item-desc">${item.desc}</div>
+            </div>
           </div>
-        </div>
-        <div class="menu-item-right">
-          <span class="menu-price">${item.price > 0 ? "$" + item.price : "Incl."}</span>
-${item.price > 0
-                    ? `<button class="add-btn" data-name="${item.name}" data-price="${item.price}" data-emoji="${item.emoji}">+ Agregar</button>`
-                    : `<span class="incl-tag">🎁 Incluido con tu plato</span>`
-                }
-        </div>
-      `;
-            grid.appendChild(div);
-        });
-    });
+          <div class="menu-item-right">
+            <span class="menu-price">${item.price > 0 ? "$" + item.price : "Incl."}</span>
+            ${item.price > 0
+                        ? `<button class="add-btn" data-name="${item.name}" data-price="${item.price}" data-emoji="${item.emoji}">+ Agregar</button>`
+                        : `<span class="incl-tag">🎁 Incluido con tu plato</span>`
+                    }
+          </div>
+        `;
+                grid.appendChild(div);
+            });
 
-    // Eventos en los botones agregar
-    document.querySelectorAll(".add-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const item = {
-                name: btn.dataset.name,
-                price: parseInt(btn.dataset.price),
-                emoji: btn.dataset.emoji
-            };
-            // Si es plato principal abre el combo, si no agrega directo
-            const platosSimples = ["Pan con Minutas", "Yuca con Chicharrones", "Paella"];
-            const esPlatoPrincipal = menuData.platos.some(p => p.name === item.name);
-            const esPlatoSimple = platosSimples.includes(item.name);
+            // Eventos botones agregar
+            grid.querySelectorAll(".add-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const item = {
+                        name: btn.dataset.name,
+                        price: parseInt(btn.dataset.price),
+                        emoji: btn.dataset.emoji
+                    };
+                    const platosSimples = ["Pan con Minutas", "Yuca con Chicharrones", "Paella"];
+                    const esPlatoPrincipal = menuData.platos.some(p => p.name === item.name);
+                    const esPlatoSimple = platosSimples.includes(item.name);
 
-            if (esPlatoPrincipal && !esPlatoSimple) {
-                openCombo(item);
-            } else {
-                addToCart(item);
-                btn.textContent = "✓ Listo";
-                btn.style.background = "#f5c800";
-                btn.style.color = "#140600";
-                setTimeout(() => {
-                    btn.textContent = "+ Agregar";
-                    btn.style.background = "";
-                    btn.style.color = "";
-                }, 1200);
-            }
+                    if (esPlatoPrincipal && !esPlatoSimple) {
+                        openCombo(item);
+                    } else {
+                        addToCart(item);
+                        btn.textContent = "✓ Listo";
+                        btn.style.background = "#f5c800";
+                        btn.style.color = "#140600";
+                        setTimeout(() => {
+                            btn.textContent = "+ Agregar";
+                            btn.style.background = "";
+                            btn.style.color = "";
+                        }, 1200);
+                    }
+                });
+            });
         });
     });
 }
@@ -225,6 +234,9 @@ function sendOrder() {
     let msg = "🇨🇺 *Pedido — Son D'licias*\n\n";
     cart.forEach(item => {
         msg += `• ${item.emoji} ${item.name} x${item.qty} = $${item.price * item.qty}\n`;
+        if (item.desc && item.desc !== "") {
+            msg += `  ↳ ${item.desc}\n`;
+        }
     });
     msg += `\n💰 *Total: $${total}*`;
     msg += `\n📦 *Entrega: ${deliveryMode}*`;
