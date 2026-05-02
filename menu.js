@@ -38,8 +38,8 @@ function cargarMenu() {
         const div = document.createElement("div");
         div.className = "menu-item";
         div.innerHTML = `
-          ${item.imagen
-            ? `<img src="${item.imagen}" alt="${item.name}" class="menu-item-img">`
+      ${item.imagen
+            ? `<img src="${item.imagen}" alt="${item.name}" class="menu-item-img" onerror="this.style.display='none'">`
             : `<div class="menu-item-img-placeholder">${item.emoji}</div>`
           }
           <div class="menu-item-body">
