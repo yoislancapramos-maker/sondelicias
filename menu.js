@@ -106,8 +106,11 @@ function cargarDestacado() {
       wrap.style.display = "block";
       card.innerHTML = destacados.map(item => `
         <div class="destacado-item">
-          <span class="destacado-badge">🔥 Plato del día</span>
-          <span class="destacado-emoji">${item.emoji}</span>
+          <span class="destacado-badge">⭐ Recomendado</span>
+          ${item.icono
+          ? `<img src="img/${item.icono}" alt="${item.name}" style="width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0">`
+          : `<span class="destacado-emoji">${item.emoji}</span>`
+        }
           <div class="destacado-info">
             <div class="destacado-name">${item.name}</div>
             <div class="destacado-desc">${item.desc}</div>

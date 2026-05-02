@@ -93,6 +93,12 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex-wrap: wrap;
+}
+
+.destacado-price {
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .destacado-badge {
