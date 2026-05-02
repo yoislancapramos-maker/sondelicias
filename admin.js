@@ -62,6 +62,16 @@ function confirmar(texto) {
   });
 }
 
+// ===== TEST SONIDO =====
+document.getElementById("btnTestSound").addEventListener("click", () => {
+  const sonido = document.getElementById("soundSelect").value;
+  if (sonido !== "mute") {
+    const audio = new Audio(sonido);
+    audio.volume = 0.7;
+    audio.play().catch(() => { });
+  }
+});
+
 // ===== LOGIN =====
 let categoriaActual = "platos";
 let editandoId = null;
@@ -78,9 +88,12 @@ function login() {
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
     // Desbloquear audio con interacción del usuario
-    const audioTest = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
-    audioTest.volume = 0;
-    audioTest.play().catch(() => { });
+    const sonidoInicial = document.getElementById("soundSelect").value;
+    if (sonidoInicial !== "mute") {
+      const audioTest = new Audio(sonidoInicial);
+      audioTest.volume = 0;
+      audioTest.play().catch(() => { });
+    }
     initAdmin();
   } else {
     document.getElementById("loginError").textContent = "Contraseña incorrecta";
@@ -262,9 +275,12 @@ function escucharPedidos() {
     // Notificación sonora cuando llega pedido nuevo
     const cantidad = snap.size;
     if (!primeraCarga && cantidad > cantidadAnterior) {
-      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
-      audio.volume = 0.7;
-      audio.play().catch(() => { });
+      const sonido = document.getElementById("soundSelect").value;
+      if (sonido !== "mute") {
+        const audio = new Audio(sonido);
+        audio.volume = 0.7;
+        audio.play().catch(() => { });
+      }
 
       // Notificación visual
       const tab = document.querySelector(".admin-tab[data-tab='pedidos']");
