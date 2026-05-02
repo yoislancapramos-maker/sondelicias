@@ -64,7 +64,10 @@ function buildMenuGrids() {
                 div.className = "menu-item";
                 div.innerHTML = `
           <div class="menu-item-left">
-            <span class="menu-item-emoji">${item.emoji}</span>
+            ${item.icono
+                        ? `<img src="img/${item.icono}" alt="${item.name}" class="menu-item-emoji-img">`
+                        : `<span class="menu-item-emoji">${item.emoji}</span>`
+                    }
             <div>
               <div class="menu-item-name">${item.name}</div>
               <div class="menu-item-desc">${item.desc}</div>
