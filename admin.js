@@ -46,6 +46,22 @@ const datosIniciales = {
   ]
 };
 
+// ===== MODAL CONFIRMAR =====
+function confirmar(texto) {
+  return new Promise((resolve) => {
+    document.getElementById("confirmarTexto").textContent = texto;
+    document.getElementById("modalConfirmar").classList.add("open");
+    document.getElementById("confirmarSi").onclick = () => {
+      document.getElementById("modalConfirmar").classList.remove("open");
+      resolve(true);
+    };
+    document.getElementById("confirmarNo").onclick = () => {
+      document.getElementById("modalConfirmar").classList.remove("open");
+      resolve(false);
+    };
+  });
+}
+
 // ===== LOGIN =====
 let categoriaActual = "platos";
 let editandoId = null;
@@ -61,6 +77,10 @@ function login() {
   if (pass === PASSWORD) {
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
+    // Desbloquear audio con interacción del usuario
+    const audioTest = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+    audioTest.volume = 0;
+    audioTest.play().catch(() => { });
     initAdmin();
   } else {
     document.getElementById("loginError").textContent = "Contraseña incorrecta";
@@ -173,7 +193,7 @@ ${item.icono
 
   // Eliminar
   div.querySelector(".delete-btn").addEventListener("click", async () => {
-    if (confirm("¿Eliminar " + item.name + "?")) {
+    if (await confirmar("¿Eliminar " + item.name + "?")) {
       await deleteDoc(doc(db, cat, item.id));
     }
   });
@@ -235,9 +255,31 @@ function escucharPedidos() {
   const lista = document.getElementById("listaPedidos");
   lista.innerHTML = "<div class='pedidos-vacio'>⏳ Cargando pedidos...</div>";
 
+  let primeraCarga = true;
+  let cantidadAnterior = 0;
+
   onSnapshot(collection(db, "pedidos"), snap => {
-    // Badge de notificación
+    // Notificación sonora cuando llega pedido nuevo
     const cantidad = snap.size;
+    if (!primeraCarga && cantidad > cantidadAnterior) {
+      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+      audio.volume = 0.7;
+      audio.play().catch(() => { });
+
+      // Notificación visual
+      const tab = document.querySelector(".admin-tab[data-tab='pedidos']");
+      if (tab) {
+        tab.style.background = "var(--verde)";
+        tab.style.borderColor = "var(--verde)";
+        setTimeout(() => {
+          tab.style.background = "";
+          tab.style.borderColor = "";
+        }, 3000);
+      }
+    }
+    primeraCarga = false;
+    cantidadAnterior = cantidad;
+    // Badge de notificación
     const tab = document.querySelector(".admin-tab[data-tab='pedidos']");
     if (tab) {
       tab.innerHTML = cantidad > 0
@@ -277,7 +319,7 @@ function escucharPedidos() {
     // Eliminar pedido individual
     document.querySelectorAll(".pedido-eliminar").forEach(btn => {
       btn.addEventListener("click", async () => {
-        if (confirm("¿Eliminar este pedido?")) {
+        if (await confirmar("¿Eliminar este pedido?")) {
           await deleteDoc(doc(db, "pedidos", btn.dataset.id));
         }
       });
@@ -286,7 +328,7 @@ function escucharPedidos() {
 }
 
 document.getElementById("btnLimpiarPedidos").addEventListener("click", async () => {
-  if (confirm("¿Limpiar todos los pedidos?")) {
+  if (await confirmar("¿Limpiar todos los pedidos?")) {
     const snap = await getDocs(collection(db, "pedidos"));
     snap.forEach(async docSnap => {
       await deleteDoc(doc(db, "pedidos", docSnap.id));
