@@ -48,6 +48,7 @@
         <button class="admin-tab active" data-tab="platos">🍖 Platos del Día</button>
         <button class="admin-tab" data-tab="postres">🍮 Bebidas & Postres</button>
         <button class="admin-tab" data-tab="crudos">🥩 Productos Crudos</button>
+        <button class="admin-tab" data-tab="publicacion">📸 Publicación</button>
         <button class="admin-tab" data-tab="mensaje">📲 Mensaje del día</button>
         <button class="admin-tab" data-tab="pedidos">📦 Pedidos</button>
       </div>
@@ -77,6 +78,27 @@
           <button class="btn-agregar" id="btnAgregarCrudo">+ Agregar</button>
         </div>
         <div class="admin-grid" id="gridCrudos"></div>
+      </div>
+
+      <!-- PANEL PUBLICACIÓN ESPECIAL -->
+      <div id="panel-publicacion" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">📸 Publicación Especial</h2>
+        </div>
+        <div class="publicacion-form">
+          <p class="pub-instruccion">✏️ Escribí el texto y generá el mensaje. Después en WhatsApp adjuntá la foto desde
+            tu galería y pegá el texto antes de enviar.</p>
+          <textarea class="admin-input pub-texto" id="pubTexto" rows="4"
+            placeholder="Ej: 🍕 ¡Hoy tenemos pizza familiar! Disponible hasta las 8pm. ¡No te la pierdas!"></textarea>
+          <div class="pub-btns">
+            <button class="btn-agregar" id="btnGenerarPublicacion">✨ Generar mensaje</button>
+            <button class="btn-cancelar" id="btnLimpiarPublicacion">🗑️ Limpiar</button>
+          </div>
+          <div id="pubPreview" class="mensaje-preview" style="display:none">
+            <pre class="mensaje-texto" id="pubMensajeTexto"></pre>
+          </div>
+          <button class="btn-copiar" id="btnCopiarPublicacion" style="display:none">📋 Copiar mensaje</button>
+        </div>
       </div>
 
       <!-- PANEL MENSAJE DIARIO -->

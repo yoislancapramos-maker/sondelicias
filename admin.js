@@ -353,3 +353,40 @@ document.getElementById("btnGenerarMensaje").addEventListener("click", async () 
     }, 2000);
   };
 });
+
+// Limpiar publicación
+document.getElementById("btnLimpiarPublicacion").addEventListener("click", () => {
+  document.getElementById("pubTexto").value = "";
+  document.getElementById("pubPreview").style.display = "none";
+  document.getElementById("btnCopiarPublicacion").style.display = "none";
+});
+
+// ===== PUBLICACIÓN ESPECIAL =====
+document.getElementById("btnGenerarPublicacion").addEventListener("click", () => {
+  const texto = document.getElementById("pubTexto").value.trim();
+
+  if (!texto) {
+    alert("Escribí un texto primero");
+    return;
+  }
+
+  let msg = "";
+  msg += `🇨🇺 *SON D'LICIAS*\n\n`;
+  msg += `${texto}\n\n`;
+  msg += `📞 092 085 838\n`;
+  msg += `🛵 Delivery · 🏠 Retiro en local`;
+
+  const preview = document.getElementById("pubPreview");
+  preview.style.display = "block";
+  document.getElementById("pubMensajeTexto").textContent = msg;
+
+  const btnCopiar = document.getElementById("btnCopiarPublicacion");
+  btnCopiar.style.display = "block";
+  btnCopiar.onclick = () => {
+    navigator.clipboard.writeText(msg);
+    btnCopiar.textContent = "✅ ¡Copiado!";
+    setTimeout(() => {
+      btnCopiar.textContent = "📋 Copiar mensaje";
+    }, 2000);
+  };
+});
