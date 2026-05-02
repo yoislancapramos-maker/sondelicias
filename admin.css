@@ -156,7 +156,8 @@ body {
 .admin-nav-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .admin-nav-user {
@@ -862,4 +863,39 @@ body {
 .sound-select option {
   background: var(--carbon);
   color: #fff;
+}
+
+/* ===== NAV RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .admin-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 4%;
+  }
+
+  .admin-nav-right {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .sound-select {
+    font-size: .75rem;
+    padding: 5px 10px;
+    max-width: 120px;
+  }
+
+  .admin-nav-user {
+    display: none;
+  }
+
+  #btnTestSound {
+    padding: 5px 10px;
+    font-size: .8rem;
+  }
+
+  .logout-btn {
+    padding: 5px 12px;
+    font-size: .8rem;
+  }
 }
