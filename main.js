@@ -50,7 +50,7 @@ let paymentMode = "Efectivo";
 
 // ===== CONSTRUIR GRILLAS DEL MENÚ DESDE FIREBASE =====
 function buildMenuGrids() {
-    ["platos", "postres", "crudos"].forEach(cat => {
+    ["platos", "pizzas", "postres", "crudos", "buffets"].forEach(cat => {
         onSnapshot(collection(db, cat), snap => {
             const grid = document.getElementById("grid-" + cat);
             if (!grid) return;
@@ -75,9 +75,11 @@ function buildMenuGrids() {
           </div>
           <div class="menu-item-right">
             <span class="menu-price">${item.price > 0 ? "$" + item.price : "Incl."}</span>
-            ${item.price > 0
-                        ? `<button class="add-btn" data-name="${item.name}" data-price="${item.price}" data-emoji="${item.emoji}">+ Agregar</button>`
-                        : `<span class="incl-tag">🎁 Incluido con tu plato</span>`
+                    ${cat === "buffets"
+                        ? `<button class="add-btn buffet-btn" data-name="${item.name}" data-price="${item.price}" data-emoji="${item.emoji}">💬 Consultar</button>`
+                        : item.price > 0
+                            ? `<button class="add-btn" data-name="${item.name}" data-price="${item.price}" data-emoji="${item.emoji}">+ Agregar</button>`
+                            : `<span class="incl-tag">🎁 Incluido con tu plato</span>`
                     }
           </div>
         `;
@@ -93,10 +95,14 @@ function buildMenuGrids() {
                         emoji: btn.dataset.emoji
                     };
                     const platosSimples = ["Pan con Minutas", "Yuca con Chicharrones", "Paella"];
-                    const esPlatoPrincipal = menuData.platos.some(p => p.name === item.name);
+                    const esPlatoPrincipal = cat === "platos";
                     const esPlatoSimple = platosSimples.includes(item.name);
+                    const esBuffet = cat === "buffets";
 
-                    if (esPlatoPrincipal && !esPlatoSimple) {
+                    if (esBuffet) {
+                        const msg = `Hola! Me interesa el ${item.name} ($${item.price}). ¿Pueden darme más información?`;
+                        window.open("https://wa.me/598092085838?text=" + encodeURIComponent(msg), "_blank");
+                    } else if (esPlatoPrincipal && !esPlatoSimple) {
                         openCombo(item);
                     } else {
                         addToCart(item);

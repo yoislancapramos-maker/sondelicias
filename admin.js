@@ -28,6 +28,15 @@ const datosIniciales = {
     { emoji: "🍮", name: "Flan Entero", desc: "Receta casera de Yohandra", price: 400, activo: true },
     { emoji: "🍮", name: "Porción de Flan", desc: "Caramelizado y cremoso", price: 100, activo: true },
   ],
+
+  pizzas: [
+    { emoji: "🍕", name: "Pizza Familiar Rectangular", desc: "Pizza casera grande, ideal para compartir", price: 1000, activo: true },
+    { emoji: "🍕", name: "Pizza Redonda", desc: "Pizza redonda casera", price: 500, activo: true },
+  ],
+  buffets: [
+    { emoji: "🎉", name: "Buffet para 20 personas", desc: "20 empanadas, 40 croquetas, 20 rollitos, 20 mini pizza, 20 sandwich, 20 mini donas, 20 bolitas de queso", price: 3500, activo: true },
+    { emoji: "🎊", name: "Buffet para 30 personas", desc: "30 empanadas, 60 croquetas, 30 rollitos, 30 mini pizza, 30 sandwich, 30 mini donas, 30 bolitas de queso", price: 4500, activo: true },
+  ],
   crudos: [
     { emoji: "🥩", name: "Bondiola", desc: "Por kg", price: 185, activo: true },
     { emoji: "🐔", name: "Pollo Entero", desc: "Por kg", price: 130, activo: true },
@@ -122,14 +131,16 @@ document.querySelectorAll(".admin-tab").forEach(tab => {
 async function initAdmin() {
   await cargarOInicializarDatos();
   escucharCambios("platos", "gridPlatos");
+  escucharCambios("pizzas", "gridPizzas");
   escucharCambios("postres", "gridPostres");
   escucharCambios("crudos", "gridCrudos");
+  escucharCambios("buffets", "gridBuffets");
   escucharPedidos();
 }
 
 // ===== CARGAR O INICIALIZAR DATOS EN FIREBASE =====
 async function cargarOInicializarDatos() {
-  for (const cat of ["platos", "postres", "crudos"]) {
+  for (const cat of ["platos", "pizzas", "postres", "crudos", "buffets"]) {
     const snap = await getDocs(collection(db, cat));
     if (snap.empty) {
       for (const item of datosIniciales[cat]) {
@@ -260,8 +271,10 @@ document.getElementById("btnGuardarItem").addEventListener("click", async () => 
 
 // Botones agregar
 document.getElementById("btnAgregarPlato").addEventListener("click", () => abrirModal("platos"));
+document.getElementById("btnAgregarPizza").addEventListener("click", () => abrirModal("pizzas"));
 document.getElementById("btnAgregarPostre").addEventListener("click", () => abrirModal("postres"));
 document.getElementById("btnAgregarCrudo").addEventListener("click", () => abrirModal("crudos"));
+document.getElementById("btnAgregarBuffet").addEventListener("click", () => abrirModal("buffets"));
 
 // ===== PEDIDOS =====
 function escucharPedidos() {

@@ -1906,3 +1906,11 @@ footer strong {
     object-fit: cover;
     flex-shrink: 0;
 }
+
+.buffet-btn {
+    background: #25d366 !important;
+}
+
+.buffet-btn:hover {
+    background: #1da851 !important;
+}

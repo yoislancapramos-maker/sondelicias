@@ -57,8 +57,10 @@
       <!-- TABS -->
       <div class="admin-tabs">
         <button class="admin-tab active" data-tab="platos">🍖 Platos del Día</button>
+        <button class="admin-tab" data-tab="pizzas">🍕 Pizzas</button>
         <button class="admin-tab" data-tab="postres">🍮 Bebidas & Postres</button>
         <button class="admin-tab" data-tab="crudos">🥩 Productos Crudos</button>
+        <button class="admin-tab" data-tab="buffets">🎉 Buffets</button>
         <button class="admin-tab" data-tab="publicacion">📸 Publicación</button>
         <button class="admin-tab" data-tab="mensaje">📲 Mensaje del día</button>
         <button class="admin-tab" data-tab="pedidos">📦 Pedidos</button>
@@ -71,6 +73,15 @@
           <button class="btn-agregar" id="btnAgregarPlato">+ Agregar plato</button>
         </div>
         <div class="admin-grid" id="gridPlatos"></div>
+      </div>
+
+      <!-- PANEL PIZZAS -->
+      <div id="panel-pizzas" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Pizzas</h2>
+          <button class="btn-agregar" id="btnAgregarPizza">+ Agregar pizza</button>
+        </div>
+        <div class="admin-grid" id="gridPizzas"></div>
       </div>
 
       <!-- PANEL POSTRES -->
@@ -122,6 +133,15 @@
           <div class="mensaje-vacio">Marcá los platos destacados del día con ⭐ y después generá el mensaje.</div>
         </div>
         <button class="btn-copiar" id="btnCopiarMensaje" style="display:none">📋 Copiar mensaje</button>
+      </div>
+
+      <!-- PANEL BUFFETS -->
+      <div id="panel-buffets" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Buffets</h2>
+          <button class="btn-agregar" id="btnAgregarBuffet">+ Agregar buffet</button>
+        </div>
+        <div class="admin-grid" id="gridBuffets"></div>
       </div>
 
       <!-- PANEL PEDIDOS -->
