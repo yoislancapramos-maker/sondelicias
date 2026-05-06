@@ -422,6 +422,80 @@ function initEvents() {
     document.getElementById("combo-add-btn").addEventListener("click", addComboToCart);
 }
 
+// ===== GALERÍA =====
+const galeriaItems = [
+    { img: "img/pollo-asado.jpg", nombre: "Pollo Asado", precio: "$250", cat: "platos" },
+    { img: "img/pollo-frito.jpg", nombre: "Pollo Frito", precio: "$250", cat: "platos" },
+    { img: "img/cerdo-asado.jpg", nombre: "Cerdo Asado", precio: "$250", cat: "platos" },
+    { img: "img/churrasco.jpg", nombre: "Churrasco de Cerdo", precio: "$250", cat: "platos" },
+    { img: "img/suprema.jpg", nombre: "Suprema a la Plancha", precio: "$250", cat: "platos" },
+    { img: "img/camarones.jpg", nombre: "Camarones", precio: "$320", cat: "platos" },
+    { img: "img/filete.jpg", nombre: "Filete de Pescado", precio: "$300", cat: "platos" },
+    { img: "img/mortadella.jpg", nombre: "Mortadella Frita", precio: "$230", cat: "platos" },
+    { img: "img/picadillo.jpg", nombre: "Picadillo de Pollo", precio: "$230", cat: "platos" },
+    { img: "img/salchicha.jpg", nombre: "Salchicha en Salsa", precio: "$230", cat: "platos" },
+    { img: "img/pan-minutas.jpg", nombre: "Pan con Minutas", precio: "$150", cat: "platos" },
+    { img: "img/yuca.jpg", nombre: "Yuca con Chicharrones", precio: "$300", cat: "platos" },
+    { img: "img/paella.jpg", nombre: "Paella", precio: "$300", cat: "platos" },
+    { img: "img/pizza-familiar.jpg", nombre: "Pizza Familiar", precio: "$1000", cat: "pizzas" },
+    { img: "img/pizza-redonda.jpg", nombre: "Pizza Redonda", precio: "$500", cat: "pizzas" },
+    { img: "img/flan.jpg", nombre: "Flan Entero", precio: "$400", cat: "postres" },
+    { img: "img/flan-porcion.jpg", nombre: "Porción de Flan", precio: "$100", cat: "postres" },
+    { img: "img/malta.jpg", nombre: "Malta", precio: "$110", cat: "postres" },
+    { img: "img/buffet.jpg", nombre: "Buffet por Encargo", precio: "Desde $3500", cat: "buffets" },
+];
+
+function initGaleria() {
+    const grid = document.getElementById("galeriaGrid");
+
+    // Construir items
+    galeriaItems.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "galeria-item";
+        div.dataset.cat = item.cat;
+        div.innerHTML = `
+      <img src="${item.img}" alt="${item.nombre}" loading="lazy">
+      <div class="galeria-overlay">
+        <div class="galeria-nombre">${item.nombre}</div>
+        <div class="galeria-precio">${item.precio}</div>
+      </div>
+    `;
+        grid.appendChild(div);
+    });
+
+    // Scroll reveal galería
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => {
+                    e.target.classList.add("visible");
+                }, i * 80);
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(".galeria-item").forEach(el => obs.observe(el));
+
+    // Filtros
+    document.querySelectorAll(".filtro-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            const cat = btn.dataset.cat;
+
+            document.querySelectorAll(".galeria-item").forEach(item => {
+                if (cat === "todos" || item.dataset.cat === cat) {
+                    item.classList.remove("oculto");
+                    setTimeout(() => item.classList.add("visible"), 50);
+                } else {
+                    item.classList.add("oculto");
+                }
+            });
+        });
+    });
+}
+
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", () => {
     buildMenuGrids();
@@ -434,6 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initIngredientes();
     initContador();
     initFaq();
+    initGaleria();
 });
 
 // ===== FAQ =====
