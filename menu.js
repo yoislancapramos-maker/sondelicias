@@ -222,8 +222,15 @@ function renderCartItems() {
     });
   }
 
-  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const costoDelivery = deliveryMode === "Delivery" ? 80 : 0;
+  const total = subtotal + costoDelivery;
+  document.getElementById("modal-subtotal").textContent = "$" + subtotal;
   document.getElementById("modal-total").textContent = "$" + total;
+  const deliveryRow = document.getElementById("cart-delivery-row");
+  if (deliveryRow) {
+    deliveryRow.style.display = deliveryMode === "Delivery" ? "flex" : "none";
+  }
   checkout.style.display = "block";
 }
 
@@ -236,16 +243,20 @@ function closeCart() {
 async function sendOrder() {
   if (cart.length === 0) return;
   const notes = document.getElementById("order-notes").value;
-  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const costoDelivery = deliveryMode === "Delivery" ? 80 : 0;
+  const total = subtotal + costoDelivery;
 
   let msg = "🇨🇺 *Pedido — Son D'licias*\n\n";
   cart.forEach(item => {
-    msg += `• ${item.emoji} ${item.name} x${item.qty} = $${item.price * item.qty}\n`;
+    msg += `• ${item.name} x${item.qty} = $${item.price * item.qty}\n`;
     if (item.desc && item.desc !== "") {
       msg += `  ↳ ${item.desc}\n`;
     }
   });
-  msg += `\n💰 *Total: $${total}*`;
+  msg += `\n💰 *Subtotal: $${subtotal}*`;
+  if (costoDelivery > 0) msg += `\n🛵 *Delivery: $${costoDelivery}*`;
+  msg += `\n💵 *Total: $${total}*`;
   msg += `\n📦 *Entrega: ${deliveryMode}*`;
   msg += `\n💳 *Pago: ${paymentMode}*`;
   if (notes) msg += `\n📝 *Notas: ${notes}*`;
@@ -334,6 +345,7 @@ function initOptions() {
       document.querySelectorAll(".delivery-opt").forEach(o => o.classList.remove("selected"));
       opt.classList.add("selected");
       deliveryMode = opt.dataset.mode;
+      renderCartItems();
     });
   });
 

@@ -855,3 +855,16 @@ body {
     background-position: -200% 0;
   }
 }
+
+.cart-delivery-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cart-delivery-amount {
+  color: var(--verde2);
+  font-weight: 800;
+  font-size: .95rem;
+}

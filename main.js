@@ -238,7 +238,9 @@ function closeCart() {
 async function sendOrder() {
     if (cart.length === 0) return;
     const notes = document.getElementById("order-notes").value;
-    const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    const costoDelivery = deliveryMode === "Delivery" ? 80 : 0;
+    const total = subtotal + costoDelivery;
 
     let msg = "🇨🇺 *Pedido — Son D'licias*\n\n";
     cart.forEach(item => {
@@ -247,7 +249,9 @@ async function sendOrder() {
             msg += `  ↳ ${item.desc}\n`;
         }
     });
-    msg += `\n💰 *Total: $${total}*`;
+    msg += `\n💰 *Subtotal: $${subtotal}*`;
+    if (costoDelivery > 0) msg += `\n🛵 *Delivery: $${costoDelivery}*`;
+    msg += `\n💵 *Total: $${total}*`;
     msg += `\n📦 *Entrega: ${deliveryMode}*`;
     msg += `\n💳 *Pago: ${paymentMode}*`;
     if (notes) msg += `\n📝 *Notas: ${notes}*`;
