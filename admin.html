@@ -61,6 +61,7 @@
         <button class="admin-tab" data-tab="postres">🍮 Bebidas & Postres</button>
         <button class="admin-tab" data-tab="crudos">🥩 Productos Crudos</button>
         <button class="admin-tab" data-tab="buffets">🎉 Buffets</button>
+        <button class="admin-tab" data-tab="estadisticas">📊 Estadísticas</button>
         <button class="admin-tab" data-tab="publicacion">📸 Publicación</button>
         <button class="admin-tab" data-tab="mensaje">📲 Mensaje del día</button>
         <button class="admin-tab" data-tab="pedidos">📦 Pedidos</button>
@@ -100,6 +101,40 @@
           <button class="btn-agregar" id="btnAgregarCrudo">+ Agregar</button>
         </div>
         <div class="admin-grid" id="gridCrudos"></div>
+      </div>
+
+      <!-- PANEL ESTADÍSTICAS -->
+      <div id="panel-estadisticas" class="admin-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">📊 Estadísticas</h2>
+          <button class="btn-agregar" id="btnActualizarStats">🔄 Actualizar</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-icon">📦</div>
+            <div class="stat-card-num" id="statTotalPedidos">0</div>
+            <div class="stat-card-label">Pedidos totales</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">💰</div>
+            <div class="stat-card-num" id="statTotalRecaudado">$0</div>
+            <div class="stat-card-label">Total recaudado</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">📅</div>
+            <div class="stat-card-num" id="statPedidosHoy">0</div>
+            <div class="stat-card-label">Pedidos de hoy</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">💵</div>
+            <div class="stat-card-num" id="statRecaudadoHoy">$0</div>
+            <div class="stat-card-label">Recaudado hoy</div>
+          </div>
+        </div>
+        <div class="stats-platos-section">
+          <h3 class="stats-subtitle">🍽️ Platos más pedidos</h3>
+          <div id="statsPlatosList" class="stats-platos-list"></div>
+        </div>
       </div>
 
       <!-- PANEL PUBLICACIÓN ESPECIAL -->

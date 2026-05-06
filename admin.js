@@ -136,6 +136,7 @@ async function initAdmin() {
   escucharCambios("crudos", "gridCrudos");
   escucharCambios("buffets", "gridBuffets");
   escucharPedidos();
+  cargarEstadisticas();
 }
 
 // ===== CARGAR O INICIALIZAR DATOS EN FIREBASE =====
@@ -431,6 +432,66 @@ document.getElementById("btnLimpiarPublicacion").addEventListener("click", () =>
   document.getElementById("pubPreview").style.display = "none";
   document.getElementById("btnCopiarPublicacion").style.display = "none";
 });
+
+// ===== ESTADÍSTICAS =====
+async function cargarEstadisticas() {
+  const snap = await getDocs(collection(db, "pedidos"));
+  const pedidos = [];
+  snap.forEach(docSnap => pedidos.push(docSnap.data()));
+
+  // Total pedidos y recaudado
+  const total = pedidos.length;
+  const recaudado = pedidos.reduce((s, p) => s + (p.total || 0), 0);
+
+  // Pedidos de hoy
+  const hoy = new Date().toLocaleDateString("es-UY");
+  const pedidosHoy = pedidos.filter(p => p.hora && p.hora.includes(hoy));
+  const recaudadoHoy = pedidosHoy.reduce((s, p) => s + (p.total || 0), 0);
+
+  document.getElementById("statTotalPedidos").textContent = total;
+  document.getElementById("statTotalRecaudado").textContent = "$" + recaudado;
+  document.getElementById("statPedidosHoy").textContent = pedidosHoy.length;
+  document.getElementById("statRecaudadoHoy").textContent = "$" + recaudadoHoy;
+
+  // Platos más pedidos
+  const conteo = {};
+  pedidos.forEach(p => {
+    if (!p.items) return;
+    p.items.split("\n").forEach(linea => {
+      const match = linea.match(/^(.+?) x(\d+)/);
+      if (match) {
+        const nombre = match[1].replace(/^[^\w]+/, "").trim();
+        const qty = parseInt(match[2]);
+        conteo[nombre] = (conteo[nombre] || 0) + qty;
+      }
+    });
+  });
+
+  const ranking = Object.entries(conteo)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+
+  const maxVal = ranking[0]?.[1] || 1;
+  const lista = document.getElementById("statsPlatosList");
+
+  if (ranking.length === 0) {
+    lista.innerHTML = "<p style='color:rgba(255,255,255,.4);font-weight:600'>No hay datos todavía</p>";
+    return;
+  }
+
+  lista.innerHTML = ranking.map(([nombre, qty], i) => `
+    <div class="stats-plato-item">
+      <span class="stats-plato-pos">${i + 1}</span>
+      <span class="stats-plato-name">${nombre}</span>
+      <div class="stats-plato-bar-wrap">
+        <div class="stats-plato-bar" style="width:${Math.round(qty / maxVal * 100)}%"></div>
+      </div>
+      <span class="stats-plato-count">x${qty}</span>
+    </div>
+  `).join("");
+}
+
+document.getElementById("btnActualizarStats").addEventListener("click", cargarEstadisticas);
 
 // ===== PUBLICACIÓN ESPECIAL =====
 document.getElementById("btnGenerarPublicacion").addEventListener("click", () => {
